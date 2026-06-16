@@ -4,26 +4,25 @@ A running record of work sessions. Each entry notes where the session **began** 
 
 ---
 
-## Session 3 — 2026-06-16
+## Session 6 — 2026-06-16
 
-**Began:** Inherited a substantially complete build (12 pages, Zustand store, widget
-dashboard, video player, charts). App was crashing on load with an infinite render loop.
+**Began:** Asked to improve layout/UI/design professionalism. Audited the live app
+across Home, Analytics, and Tests in-browser.
 
 **Done:**
-- Diagnosed root cause: `useStore((s) => s.subjectProgress())` and
-  `useStore((s) => s.totalHours())` returned a fresh object/value on every render, so
-  Zustand saw a new snapshot each time → "Maximum update depth exceeded" crash on Home.
-- Added memoized derived hooks `useSubjectProgress()` and `useTotalHours()` in `lib/store.ts`
-  that subscribe to the stable `videoProgress` slice and recompute via `useMemo`.
-- Updated call sites: `widget-content.tsx`, `analytics.tsx`, `profile.tsx`.
-- Verified in-browser: Home, Analytics, and Tests render cleanly with no error overlay.
+- Found the biggest credibility problem: every subject metric rendered the SAME value
+  (~12%). Root cause in `lib/store.ts` `seedProgress()` — the completed/partial calc keyed
+  only off `video.number` and `chapter.number`, never the subject, so all six subjects
+  computed identical completion. This polluted the Home Subject Progress rings, Analytics
+  Subject Completion radial, and Subject Mastery bars.
+- Rewrote `seedProgress()` with a per-subject `SUBJECT_TARGET` map (Physics 71% → English
+  25%), completing earlier chapters/videos first and leaving a small in-progress frontier.
+  Now the dashboard tells a believable learning story with distinct, descending values.
+- Verified in-browser (after clearing persisted localStorage): rings show 72/55/48,
+  radial shows nested arcs (72/55/48/40/33%), mastery bars graduate cleanly, and Total
+  Study Hours reads a realistic 111h.
 
-**Ended:** App loads and runs without errors. Home dashboard, Analytics charts, and Tests
-center all confirmed working. Syllabus & Doubts pages remain reachable via Cmd+K spotlight
-(consistent with the 10-item top nav in the spec).
-
-**Next candidates:** Full click-through of Library video player modal states (theater/PiP),
-Live page interactions, and Tests attempt/auto-save flow.
+**Ended:** Subject analytics are coherent and product-grade across every surface.
 
 ---
 
