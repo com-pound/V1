@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import {
-  User, Bell, Target, Layout, RotateCcw, Calendar, Sliders, Check, Trash2, Sparkles,
+  User, Bell, Target, Layout, RotateCcw, Sliders, Check, Trash2, Sparkles,
 } from 'lucide-react'
 import { GlassCard, Toggle, Segmented, Avatar } from '@/components/delta/ui'
 import { useStore } from '@/lib/store'
@@ -12,6 +12,8 @@ export function SettingsPage() {
   const dailyGoalHours = useStore((s) => s.dailyGoalHours)
   const setDailyGoal = useStore((s) => s.setDailyGoal)
   const customCountdownDate = useStore((s) => s.customCountdownDate)
+  const countdownLabel = useStore((s) => s.countdownLabel)
+  const setCountdown = useStore((s) => s.setCountdown)
   const resetWidgets = useStore((s) => s.resetWidgets)
   const setTab = useStore((s) => s.setTab)
   const profile = useStore((s) => s.profile)
@@ -45,13 +47,13 @@ export function SettingsPage() {
             <Avatar name={profile.name} size={56} />
             <div>
               <p className="text-sm font-medium">{profile.name}</p>
-              <p className="text-xs text-muted-foreground">aryan.sharma@delta.edu</p>
+              <p className="text-xs text-muted-foreground">{profile.examName} · {profile.targetYear}</p>
             </div>
             <button onClick={flash} className="ml-auto rounded-full bg-white/5 border border-border px-3 py-1.5 text-xs hover:bg-white/10">Change avatar</button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Display name" defaultValue={profile.name} onBlur={(v) => { setProfile({ name: v }); flash() }} />
-            <Field label="Email" defaultValue="aryan.sharma@delta.edu" onBlur={flash} />
+            <Field label="Exam / goal" defaultValue={profile.examName} onBlur={(v) => { setProfile({ examName: v }); flash() }} />
             <Field label="Batch" defaultValue={profile.batch} onBlur={(v) => { setProfile({ batch: v }); flash() }} />
             <Field label="Location" defaultValue={profile.location} onBlur={(v) => { setProfile({ location: v }); flash() }} />
           </div>
@@ -73,10 +75,20 @@ export function SettingsPage() {
               />
               <div className="flex justify-between text-[10px] text-muted-foreground mt-1"><span>1h</span><span>12h</span></div>
             </div>
+            <Row label="Countdown label" hint="Shown on the countdown widget (e.g. Exam Day, Final Test)">
+              <input
+                defaultValue={countdownLabel}
+                onBlur={(e) => { setCountdown(e.target.value || 'Exam Day', customCountdownDate); flash() }}
+                className="w-44 rounded-lg bg-white/5 border border-border px-3 py-1.5 text-sm outline-none focus:border-white/25"
+              />
+            </Row>
             <Row label="Target exam date" hint="Used for the countdown widget">
-              <span className="flex items-center gap-2 text-sm rounded-lg bg-white/5 border border-border px-3 py-1.5">
-                <Calendar className="size-4 text-primary" /> {new Date(customCountdownDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
-              </span>
+              <input
+                type="date"
+                defaultValue={customCountdownDate}
+                onChange={(e) => { setCountdown(countdownLabel, e.target.value); flash() }}
+                className="flex items-center gap-2 text-sm rounded-lg bg-white/5 border border-border px-3 py-1.5 outline-none focus:border-white/25 [color-scheme:dark]"
+              />
             </Row>
           </div>
         </GlassCard>

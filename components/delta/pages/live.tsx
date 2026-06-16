@@ -22,7 +22,7 @@ const AUTO_MSGS = [
   { user: 'Tara N.', msg: 'Please solve one more example' },
   { user: 'Myra J.', msg: 'Best explanation ever' },
   { user: 'Arjun D.', msg: 'Doubt cleared, thanks NV sir!' },
-  { user: 'Neha B.', msg: 'Is this in JEE Advanced syllabus?' },
+  { user: 'Neha B.', msg: 'Is this part of the exam syllabus?' },
 ]
 
 export function LivePage() {

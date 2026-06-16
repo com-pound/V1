@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Project Delta — JEE Study Platform',
-  description: 'A premium full-stack study platform engineered for JEE aspirants.',
+  title: 'Project Delta — Study Platform',
+  description: 'A premium full-stack study platform for exam aspirants across every subject and goal.',
   generator: 'v0.app',
   icons: {
     icon: [
