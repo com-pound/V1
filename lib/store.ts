@@ -34,6 +34,7 @@ export interface UserProfile {
   bio: string
   targetYear: string
   batch: string
+  examName: string
 }
 
 export interface WidgetState {
@@ -124,6 +125,8 @@ interface DeltaState {
   setDailyGoal: (h: number) => void
   addStudyHours: (h: number) => void
   customCountdownDate: string
+  countdownLabel: string
+  setCountdown: (label: string, date: string) => void
 
   // notes
   notes: NoteItem[]
@@ -185,9 +188,10 @@ export const useStore = create<DeltaState>()(
       profile: {
         name: 'Aryan Sharma',
         location: 'Kota, Rajasthan',
-        bio: 'JEE 2027 aspirant. Targeting a top 500 rank. Physics is my strength, grinding through organic chemistry.',
+        bio: 'Aiming for a top rank. Building consistent study habits one day at a time.',
         targetYear: '2027',
         batch: 'Nucleus 2026',
+        examName: 'My Exam',
       },
       setProfile: (patch) => set((s) => ({ profile: { ...s.profile, ...patch } })),
 
@@ -228,8 +232,10 @@ export const useStore = create<DeltaState>()(
       dailyGoalHours: 6,
       hoursToday: 3.5,
       customCountdownDate: '2027-01-24',
+      countdownLabel: 'Exam Day',
       setDailyGoal: (h) => set({ dailyGoalHours: h }),
       addStudyHours: (h) => set((s) => ({ hoursToday: Math.min(s.dailyGoalHours + 2, s.hoursToday + h) })),
+      setCountdown: (label, date) => set({ countdownLabel: label, customCountdownDate: date }),
 
       notes: seedNotes,
       addNote: (n) =>
@@ -292,6 +298,7 @@ export const useStore = create<DeltaState>()(
         dailyGoalHours: s.dailyGoalHours,
         hoursToday: s.hoursToday,
         customCountdownDate: s.customCountdownDate,
+        countdownLabel: s.countdownLabel,
         notes: s.notes,
         quickScratch: s.quickScratch,
         history: s.history,

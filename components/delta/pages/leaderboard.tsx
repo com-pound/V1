@@ -29,7 +29,7 @@ export function LeaderboardPage() {
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <h1 className="text-2xl font-light tracking-tight">Leaderboard</h1>
-          <p className="text-sm text-muted-foreground">{leaderboard.length.toLocaleString()} aspirants competing</p>
+          <p className="text-sm text-muted-foreground">{leaderboard.length.toLocaleString()} learners competing</p>
         </div>
         <div className="flex items-center gap-2">
           {SCOPES.map((s) => <Pill key={s} active={scope === s} onClick={() => setScope(s)}>{s}</Pill>)}
@@ -90,7 +90,7 @@ export function LeaderboardPage() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search aspirants..."
+            placeholder="Search learners..."
             className="w-full rounded-full bg-white/5 border border-border pl-10 pr-4 py-2 text-sm outline-none focus:border-white/25"
           />
         </div>

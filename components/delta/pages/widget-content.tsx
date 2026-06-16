@@ -18,6 +18,7 @@ function greeting() {
 
 export function WidgetGreeting() {
   const firstName = useStore((s) => s.profile.name).split(' ')[0]
+  const streak = useStore((s) => s.streak)
   return (
     <div className="flex items-center justify-between h-full px-1">
       <div>
@@ -30,7 +31,7 @@ export function WidgetGreeting() {
       </div>
       <div className="hidden lg:flex items-center gap-2 rounded-full bg-primary/10 border border-primary/20 px-4 py-2">
         <Flame className="size-4 text-primary" />
-        <span className="text-sm font-medium text-primary">23 day streak</span>
+        <span className="text-sm font-medium text-primary">{streak} day streak</span>
       </div>
     </div>
   )
@@ -246,10 +247,11 @@ export function WidgetLiveStatus() {
 
 export function WidgetCustomCountdown() {
   const date = useStore((s) => s.customCountdownDate)
+  const label = useStore((s) => s.countdownLabel)
   const days = Math.max(0, Math.ceil((new Date(date).getTime() - Date.now()) / 86400000))
   return (
     <div className="flex flex-col h-full items-center justify-center text-center">
-      <Header icon={<CalendarClock className="size-3.5" />} title="JEE Main 2027" full />
+      <Header icon={<CalendarClock className="size-3.5" />} title={label} full />
       <span className="text-5xl font-extralight tabular text-primary my-2">{days}</span>
       <span className="text-xs text-muted-foreground">days remaining</span>
       <span className="text-[11px] text-muted-foreground mt-1">{new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>

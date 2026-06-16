@@ -37,7 +37,7 @@ export function SyllabusPage() {
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <h1 className="text-2xl font-light tracking-tight">Syllabus Tracker</h1>
-          <p className="text-sm text-muted-foreground">Track your chapter-wise completion across the full JEE syllabus</p>
+          <p className="text-sm text-muted-foreground">Track your chapter-wise completion across your full syllabus</p>
         </div>
         <div className="flex items-center gap-3">
           <ProgressRing value={overall.pct} size={48} stroke={5} valueClass="text-primary">
