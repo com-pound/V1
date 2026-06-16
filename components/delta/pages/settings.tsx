@@ -13,6 +13,8 @@ export function SettingsPage() {
   const setDailyGoal = useStore((s) => s.setDailyGoal)
   const customCountdownDate = useStore((s) => s.customCountdownDate)
   const resetWidgets = useStore((s) => s.resetWidgets)
+  const profile = useStore((s) => s.profile)
+  const setProfile = useStore((s) => s.setProfile)
 
   const [notif, setNotif] = useState({ live: true, tests: true, streak: true, leaderboard: false })
   const [reduceMotion, setReduceMotion] = useState(false)
@@ -39,18 +41,18 @@ export function SettingsPage() {
         <GlassCard className="p-5">
           <SectionTitle icon={<User className="size-4" />} title="Account" />
           <div className="flex items-center gap-4 mb-4">
-            <Avatar name="Aryan Sharma" size={56} />
+            <Avatar name={profile.name} size={56} />
             <div>
-              <p className="text-sm font-medium">Aryan Sharma</p>
+              <p className="text-sm font-medium">{profile.name}</p>
               <p className="text-xs text-muted-foreground">aryan.sharma@delta.edu</p>
             </div>
             <button onClick={flash} className="ml-auto rounded-full bg-white/5 border border-border px-3 py-1.5 text-xs hover:bg-white/10">Change avatar</button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Field label="Display name" defaultValue="Aryan Sharma" onBlur={flash} />
+            <Field label="Display name" defaultValue={profile.name} onBlur={(v) => { setProfile({ name: v }); flash() }} />
             <Field label="Email" defaultValue="aryan.sharma@delta.edu" onBlur={flash} />
-            <Field label="Batch" defaultValue="Nucleus 2026" onBlur={flash} />
-            <Field label="Location" defaultValue="Kota, Rajasthan" onBlur={flash} />
+            <Field label="Batch" defaultValue={profile.batch} onBlur={(v) => { setProfile({ batch: v }); flash() }} />
+            <Field label="Location" defaultValue={profile.location} onBlur={(v) => { setProfile({ location: v }); flash() }} />
           </div>
         </GlassCard>
 
@@ -156,13 +158,13 @@ function Row({ label, hint, children }: { label: string; hint?: string; children
   )
 }
 
-function Field({ label, defaultValue, onBlur }: { label: string; defaultValue: string; onBlur?: () => void }) {
+function Field({ label, defaultValue, onBlur }: { label: string; defaultValue: string; onBlur?: (value: string) => void }) {
   return (
     <label className="block">
       <span className="text-[11px] text-muted-foreground">{label}</span>
       <input
         defaultValue={defaultValue}
-        onBlur={onBlur}
+        onBlur={(e) => onBlur?.(e.target.value)}
         className="mt-1 w-full rounded-lg bg-white/5 border border-border px-3 py-2 text-sm outline-none focus:border-white/25"
       />
     </label>

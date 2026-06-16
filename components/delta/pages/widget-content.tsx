@@ -17,11 +17,12 @@ function greeting() {
 }
 
 export function WidgetGreeting() {
+  const firstName = useStore((s) => s.profile.name).split(' ')[0]
   return (
     <div className="flex items-center justify-between h-full px-1">
       <div>
         <p className="text-2xl font-light tracking-tight text-balance">
-          {greeting()}, <span className="font-medium">Aryan</span>
+          {greeting()}, <span className="font-medium">{firstName}</span>
         </p>
         <p className="text-sm text-muted-foreground mt-1">
           {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })} · Let&apos;s make today count.

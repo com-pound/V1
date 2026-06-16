@@ -27,6 +27,30 @@ Live page interactions, and Tests attempt/auto-save flow.
 
 ---
 
+## Session 4 — 2026-06-16
+
+**Began:** App running cleanly. User requested an onboarding-style flow to create the
+user profile (previously the profile was hardcoded as "Aryan Sharma" everywhere).
+
+**Done:**
+- Added a persisted `profile` slice to `lib/store.ts` (`name`, `location`, `bio`,
+  `targetYear`, `batch`) with a `setProfile()` action; added to `partialize`.
+- Rebuilt `onboarding.tsx` to a 4-step flow, inserting a "Create your profile" step
+  (live-initials avatar, name + location fields, JEE target-year selector, optional bio)
+  in the same glass-card style. Continue is disabled until a name is entered; Skip/Get
+  started both commit sensible defaults.
+- Wired profile data through the app: `profile.tsx` header, `widget-content.tsx` greeting,
+  `top-nav.tsx` avatar, and `settings.tsx` account fields (now read + write the store).
+- Verified end-to-end in browser: created "Riya Verma / Hyderabad" → greeting, nav avatar
+  (RV), and profile page all reflect the new data; settings edits persist back.
+
+**Ended:** Profile creation is fully functional and persisted. App runs error-free.
+
+**Next candidates:** Library video player modal states (theater/PiP), Live page
+interactions, Tests attempt/auto-save flow, optional avatar image upload.
+
+---
+
 ## Earlier work (pre-session, from git history)
 
 - `c5d0f18` Initial commit from v0 — app shell, store, mock data, most pages.

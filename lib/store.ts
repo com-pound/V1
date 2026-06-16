@@ -27,6 +27,14 @@ export type TabId =
   | 'syllabus'
   | 'doubts'
 
+export interface UserProfile {
+  name: string
+  location: string
+  bio: string
+  targetYear: string
+  batch: string
+}
+
 export interface WidgetState {
   id: string
   type: string
@@ -96,6 +104,10 @@ interface DeltaState {
 
   onboardingDone: boolean
   finishOnboarding: () => void
+
+  // user profile
+  profile: UserProfile
+  setProfile: (patch: Partial<UserProfile>) => void
 
   // progress
   videoProgress: Record<string, VideoProgress>
@@ -168,6 +180,15 @@ export const useStore = create<DeltaState>()(
 
       onboardingDone: false,
       finishOnboarding: () => set({ onboardingDone: true }),
+
+      profile: {
+        name: 'Aryan Sharma',
+        location: 'Kota, Rajasthan',
+        bio: 'JEE 2027 aspirant. Targeting a top 500 rank. Physics is my strength, grinding through organic chemistry.',
+        targetYear: '2027',
+        batch: 'Nucleus 2026',
+      },
+      setProfile: (patch) => set((s) => ({ profile: { ...s.profile, ...patch } })),
 
       videoProgress: seedProgress(),
       setVideoProgress: (id, fraction) =>
@@ -277,6 +298,7 @@ export const useStore = create<DeltaState>()(
         gridMode: s.gridMode,
         onboardingDone: s.onboardingDone,
         liveAttended: s.liveAttended,
+        profile: s.profile,
       }),
     }
   )
