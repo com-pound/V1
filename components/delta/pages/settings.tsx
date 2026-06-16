@@ -111,6 +111,14 @@ export function SettingsPage() {
         {/* Dashboard */}
         <GlassCard className="p-5">
           <SectionTitle icon={<Layout className="size-4" />} title="Dashboard" />
+          <Row label="Playground" hint="Add widgets, drag, resize & arrange your dashboard layout">
+            <button
+              onClick={() => setTab('playground')}
+              className="flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-4 py-2 text-sm font-medium hover:opacity-90"
+            >
+              <Sparkles className="size-4" /> Open Playground
+            </button>
+          </Row>
           <Row label="Reset widget layout" hint="Restore the default home dashboard arrangement">
             <button
               onClick={() => { resetWidgets(); flash() }}

@@ -26,6 +26,7 @@ export type TabId =
   | 'settings'
   | 'syllabus'
   | 'doubts'
+  | 'playground'
 
 export interface UserProfile {
   name: string
