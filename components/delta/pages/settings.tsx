@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import {
-  User, Bell, Target, Layout, RotateCcw, Calendar, Sliders, Check, Trash2,
+  User, Bell, Target, Layout, RotateCcw, Calendar, Sliders, Check, Trash2, Sparkles,
 } from 'lucide-react'
 import { GlassCard, Toggle, Segmented, Avatar } from '@/components/delta/ui'
 import { useStore } from '@/lib/store'
@@ -13,6 +13,7 @@ export function SettingsPage() {
   const setDailyGoal = useStore((s) => s.setDailyGoal)
   const customCountdownDate = useStore((s) => s.customCountdownDate)
   const resetWidgets = useStore((s) => s.resetWidgets)
+  const setTab = useStore((s) => s.setTab)
   const profile = useStore((s) => s.profile)
   const setProfile = useStore((s) => s.setProfile)
 
