@@ -1,6 +1,6 @@
 'use client'
 
-import { useStore } from '@/lib/store'
+import { useStore, useSubjectProgress } from '@/lib/store'
 import { SUBJECTS, liveSessions, tests, leaderboard, activity } from '@/lib/mock-data'
 import { ProgressRing } from '../ui'
 import { cn } from '@/lib/utils'
@@ -99,7 +99,7 @@ export function WidgetDailyGoal() {
 }
 
 export function WidgetSubjectRings() {
-  const subjectProgress = useStore((s) => s.subjectProgress())
+  const subjectProgress = useSubjectProgress()
   const core = SUBJECTS.slice(0, 3)
   return (
     <div className="flex flex-col h-full">

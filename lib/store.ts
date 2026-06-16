@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from 'react'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import {
@@ -280,3 +281,18 @@ export const useStore = create<DeltaState>()(
     }
   )
 )
+
+// --- Derived selectors -------------------------------------------------------
+// These compute objects/values from state. They must be memoized against the
+// underlying `videoProgress` slice; calling the raw store getters inside a
+// selector returns a fresh reference each render and triggers an infinite loop.
+
+export function useSubjectProgress(): Record<SubjectId, number> {
+  const vp = useStore((s) => s.videoProgress)
+  return useMemo(() => useStore.getState().subjectProgress(), [vp])
+}
+
+export function useTotalHours(): number {
+  const vp = useStore((s) => s.videoProgress)
+  return useMemo(() => useStore.getState().totalHours(), [vp])
+}

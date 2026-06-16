@@ -5,7 +5,7 @@ import {
   FlaskConical, Sigma, TrendingUp, BookOpen,
 } from 'lucide-react'
 import { GlassCard, Avatar, ProgressRing } from '@/components/delta/ui'
-import { useStore } from '@/lib/store'
+import { useStore, useSubjectProgress, useTotalHours } from '@/lib/store'
 import { achievements, activity, SUBJECTS } from '@/lib/mock-data'
 import { cn } from '@/lib/utils'
 
@@ -13,9 +13,9 @@ const ACT_ICON: Record<string, any> = { video: BookOpen, test: Target, note: Pen
 
 export function ProfilePage() {
   const streak = useStore((s) => s.streak)
-  const totalHours = useStore((s) => s.totalHours())
+  const totalHours = useTotalHours()
   const history = useStore((s) => s.history)
-  const subjectProgress = useStore((s) => s.subjectProgress())
+  const subjectProgress = useSubjectProgress()
   const setTab = useStore((s) => s.setTab)
   const earned = achievements.filter((a) => a.earned)
 
