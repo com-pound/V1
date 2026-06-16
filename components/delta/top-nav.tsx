@@ -20,6 +20,7 @@ const TABS: { id: TabId; label: string }[] = [
 
 export function TopNav() {
   const { activeTab, setTab, setSpotlight } = useStore()
+  const profileName = useStore((s) => s.profile.name)
 
   return (
     <header className="fixed top-0 inset-x-0 z-50 h-16 glass-strong border-b border-border flex items-center px-5 gap-4">
@@ -70,7 +71,7 @@ export function TopNav() {
           <span className="absolute top-0.5 right-0.5 size-2 rounded-full bg-primary ring-2 ring-background" />
         </div>
         <button onClick={() => setTab('profile')} aria-label="Profile">
-          <Avatar name="Aryan Sharma" size={36} />
+          <Avatar name={profileName} size={36} />
         </button>
       </div>
     </header>

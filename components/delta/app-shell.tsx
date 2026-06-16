@@ -18,6 +18,7 @@ import { ProfilePage } from './pages/profile'
 import { SettingsPage } from './pages/settings'
 import { SyllabusPage } from './pages/syllabus'
 import { DoubtsPage } from './pages/doubts'
+import { PlaygroundPage } from './pages/playground'
 
 function ActivePage() {
   const tab = useStore((s) => s.activeTab)
@@ -34,6 +35,7 @@ function ActivePage() {
     case 'settings': return <SettingsPage />
     case 'syllabus': return <SyllabusPage />
     case 'doubts': return <DoubtsPage />
+    case 'playground': return <PlaygroundPage />
     default: return <HomePage />
   }
 }

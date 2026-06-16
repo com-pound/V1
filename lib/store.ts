@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from 'react'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import {
@@ -25,6 +26,15 @@ export type TabId =
   | 'settings'
   | 'syllabus'
   | 'doubts'
+  | 'playground'
+
+export interface UserProfile {
+  name: string
+  location: string
+  bio: string
+  targetYear: string
+  batch: string
+}
 
 export interface WidgetState {
   id: string
@@ -95,6 +105,10 @@ interface DeltaState {
 
   onboardingDone: boolean
   finishOnboarding: () => void
+
+  // user profile
+  profile: UserProfile
+  setProfile: (patch: Partial<UserProfile>) => void
 
   // progress
   videoProgress: Record<string, VideoProgress>
@@ -167,6 +181,15 @@ export const useStore = create<DeltaState>()(
 
       onboardingDone: false,
       finishOnboarding: () => set({ onboardingDone: true }),
+
+      profile: {
+        name: 'Aryan Sharma',
+        location: 'Kota, Rajasthan',
+        bio: 'JEE 2027 aspirant. Targeting a top 500 rank. Physics is my strength, grinding through organic chemistry.',
+        targetYear: '2027',
+        batch: 'Nucleus 2026',
+      },
+      setProfile: (patch) => set((s) => ({ profile: { ...s.profile, ...patch } })),
 
       videoProgress: seedProgress(),
       setVideoProgress: (id, fraction) =>
@@ -276,7 +299,23 @@ export const useStore = create<DeltaState>()(
         gridMode: s.gridMode,
         onboardingDone: s.onboardingDone,
         liveAttended: s.liveAttended,
+        profile: s.profile,
       }),
     }
   )
 )
+
+// --- Derived selectors -------------------------------------------------------
+// These compute objects/values from state. They must be memoized against the
+// underlying `videoProgress` slice; calling the raw store getters inside a
+// selector returns a fresh reference each render and triggers an infinite loop.
+
+export function useSubjectProgress(): Record<SubjectId, number> {
+  const vp = useStore((s) => s.videoProgress)
+  return useMemo(() => useStore.getState().subjectProgress(), [vp])
+}
+
+export function useTotalHours(): number {
+  const vp = useStore((s) => s.videoProgress)
+  return useMemo(() => useStore.getState().totalHours(), [vp])
+}

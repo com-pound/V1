@@ -7,12 +7,12 @@ import {
 } from 'recharts'
 import { Clock, TrendingUp, Flame, Target, Award, Activity, BookOpen } from 'lucide-react'
 import { GlassCard, StatNumber, ProgressRing } from '@/components/delta/ui'
-import { useStore } from '@/lib/store'
+import { useStore, useSubjectProgress, useTotalHours } from '@/lib/store'
 import { studyHours, scoreTrend, SUBJECTS } from '@/lib/mock-data'
 
 export function AnalyticsPage() {
-  const subjectProgress = useStore((s) => s.subjectProgress())
-  const totalHours = useStore((s) => s.totalHours())
+  const subjectProgress = useSubjectProgress()
+  const totalHours = useTotalHours()
   const streak = useStore((s) => s.streak)
   const history = useStore((s) => s.history)
 
