@@ -79,7 +79,11 @@ export function LeaderboardPage() {
         </div>
         <div className="text-right">
           <p className="text-lg font-light tabular">{me.score.toLocaleString()}</p>
-          <p className="text-[11px] text-emerald-300 flex items-center gap-1 justify-end"><TrendingUp className="size-3" /> +{me.change} this week</p>
+          {me.change >= 0 ? (
+            <p className="text-[11px] text-emerald-300 flex items-center gap-1 justify-end"><TrendingUp className="size-3" /> +{me.change} this week</p>
+          ) : (
+            <p className="text-[11px] text-red-300 flex items-center gap-1 justify-end"><TrendingDown className="size-3" /> {me.change} this week</p>
+          )}
         </div>
       </GlassCard>
 
