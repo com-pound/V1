@@ -36,16 +36,18 @@ export function HomePage() {
           ))}
         </div>
       ) : (
-        <div className="relative" style={{ minHeight: canvasHeight }}>
-          {widgets.map((w) => (
-            <GlassCard
-              key={w.id}
-              className="absolute p-4"
-              style={{ left: w.x, top: w.y, width: w.w, height: w.h, zIndex: w.z }}
-            >
-              <div className="h-full">{WIDGET_REGISTRY[w.type]?.render()}</div>
-            </GlassCard>
-          ))}
+        <div className="w-full overflow-x-auto">
+          <div className="relative mx-auto" style={{ width: 1448, minHeight: canvasHeight }}>
+            {widgets.map((w) => (
+              <GlassCard
+                key={w.id}
+                className="absolute p-4"
+                style={{ left: w.x, top: w.y, width: w.w, height: w.h, zIndex: w.z }}
+              >
+                <div className="h-full">{WIDGET_REGISTRY[w.type]?.render()}</div>
+              </GlassCard>
+            ))}
+          </div>
         </div>
       )}
     </div>

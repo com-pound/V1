@@ -4,6 +4,25 @@ A running record of work sessions. Each entry notes where the session **began** 
 
 ---
 
+## Session 7 — 2026-06-16
+
+**Began:** Asked to improve layout. Audited Home, Library, and Live in-browser.
+
+**Done:**
+- Home dashboard used an absolute-positioned canvas left-anchored at a fixed width, so it
+  didn't center on wide screens, the greeting banner left a dead gap top-right, and the
+  240px bottom-row cards clipped Recent Activity / left Exam Day mostly empty.
+- `home.tsx`: wrapped the canvas in a centered `mx-auto` container (fixed 1448px width) with
+  an `overflow-x-auto` fallback so it centers on wide viewports and scrolls on narrow ones.
+- `store.ts` `DEFAULT_WIDGETS`: widened greeting banner to 1124px to meet the Live card,
+  bumped top-row card height 220→224px and bottom-row 240→264px so content no longer clips.
+- Verified in-browser at 1440 and 1600 widths: even gutters, full-width banner, and the
+  bottom row now reveals all four Recent Activity items.
+
+**Ended:** Home dashboard layout is balanced and centered across widths.
+
+---
+
 ## Session 6 — 2026-06-16
 
 **Began:** Asked to improve layout/UI/design professionalism. Audited the live app
