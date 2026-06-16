@@ -64,19 +64,43 @@ export interface HistoryRow {
   trend: number
 }
 
-// --- seed deterministic initial progress (~38% complete, declining by depth) ---
+// --- seed deterministic initial progress ---
+// Each subject gets a distinct target completion so the dashboard reflects a
+// believable learning journey (earlier chapters finished first, mastery
+// declining across subjects) instead of an identical value everywhere.
+const SUBJECT_TARGET: Record<SubjectId, number> = {
+  physics: 0.71,
+  chemistry: 0.55,
+  maths: 0.48,
+  biology: 0.4,
+  cs: 0.33,
+  english: 0.25,
+}
+
 function seedProgress(): Record<string, VideoProgress> {
   const map: Record<string, VideoProgress> = {}
-  videos.forEach((v) => {
-    const chapter = chapters.find((c) => c.id === v.chapterId)!
-    const depthPenalty = chapter.number / 14
-    const roll = ((v.number * 7 + chapter.number * 13) % 10) / 10
-    const completed = roll > depthPenalty + 0.45
-    const partial = !completed && roll > depthPenalty
-    map[v.id] = {
-      fraction: completed ? 1 : partial ? 0.35 : 0,
-      completed,
-    }
+  SUBJECTS.forEach((sub) => {
+    const subVideos = videos
+      .filter((v) => v.subjectId === sub.id)
+      // earlier chapters (then earlier videos) are completed first
+      .sort((a, b) => {
+        const ca = chapters.find((c) => c.id === a.chapterId)!.number
+        const cb = chapters.find((c) => c.id === b.chapterId)!.number
+        return ca - cb || a.number - b.number
+      })
+    const target = SUBJECT_TARGET[sub.id] ?? 0.4
+    const completeCount = Math.round(subVideos.length * target)
+    // a small "in progress" frontier just past the completed boundary
+    const partialCount = Math.min(3, subVideos.length - completeCount)
+    subVideos.forEach((v, i) => {
+      if (i < completeCount) {
+        map[v.id] = { fraction: 1, completed: true }
+      } else if (i < completeCount + partialCount) {
+        map[v.id] = { fraction: 0.35, completed: false }
+      } else {
+        map[v.id] = { fraction: 0, completed: false }
+      }
+    })
   })
   return map
 }

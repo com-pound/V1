@@ -315,7 +315,12 @@ export const leaderboard: LeaderEntry[] = Array.from({ length: 1000 }, (_, i) =>
     rank: i + 1,
   }
 })
-// Inject "you" at rank 47
+  // Sort by score descending and reassign ranks so the standings are strictly
+  // monotonic (higher rank ⇒ higher score). The seeded score noise would
+  // otherwise leave rank #3 occasionally outscoring rank #2, etc.
+  .sort((a, b) => b.score - a.score)
+  .map((entry, i) => ({ ...entry, rank: i + 1 }))
+// Inject "you" at rank 47 (keep that slot's score so the standings stay ordered)
 leaderboard[46] = { ...leaderboard[46], name: 'Aryan Sharma', you: true, batch: 'Nucleus 2026' }
 
 // Activity feed

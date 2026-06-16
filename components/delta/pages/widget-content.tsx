@@ -6,7 +6,7 @@ import { ProgressRing } from '../ui'
 import { cn } from '@/lib/utils'
 import {
   Flame, Clock, Target, BookMarked, StickyNote, Trophy, Activity as ActivityIcon,
-  TrendingUp, Radio, CalendarClock, ArrowUpRight, Play,
+  TrendingUp, Radio, CalendarClock, ArrowUpRight, ArrowDownRight, Play,
 } from 'lucide-react'
 
 function greeting() {
@@ -170,7 +170,11 @@ export function WidgetLeaderPeek() {
       <Header icon={<Trophy className="size-3.5" />} title="Leaderboard" action={() => setTab('leaderboard')} />
       <div className="flex items-baseline gap-2 mt-1">
         <span className="text-3xl font-light tabular">#{you.rank}</span>
-        <span className="text-xs text-success flex items-center"><ArrowUpRight className="size-3" />{you.change}</span>
+        {you.change >= 0 ? (
+          <span className="text-xs text-success flex items-center"><ArrowUpRight className="size-3" />{you.change}</span>
+        ) : (
+          <span className="text-xs text-destructive flex items-center"><ArrowDownRight className="size-3" />{Math.abs(you.change)}</span>
+        )}
       </div>
       <p className="text-xs text-muted-foreground">{you.score} pts</p>
       <div className="mt-auto space-y-1">

@@ -4,26 +4,51 @@ A running record of work sessions. Each entry notes where the session **began** 
 
 ---
 
-## Session 3 — 2026-06-16
+## Session 6 — 2026-06-16
 
-**Began:** Inherited a substantially complete build (12 pages, Zustand store, widget
-dashboard, video player, charts). App was crashing on load with an infinite render loop.
+**Began:** Asked to improve layout/UI/design professionalism. Audited the live app
+across Home, Analytics, and Tests in-browser.
 
 **Done:**
-- Diagnosed root cause: `useStore((s) => s.subjectProgress())` and
-  `useStore((s) => s.totalHours())` returned a fresh object/value on every render, so
-  Zustand saw a new snapshot each time → "Maximum update depth exceeded" crash on Home.
-- Added memoized derived hooks `useSubjectProgress()` and `useTotalHours()` in `lib/store.ts`
-  that subscribe to the stable `videoProgress` slice and recompute via `useMemo`.
-- Updated call sites: `widget-content.tsx`, `analytics.tsx`, `profile.tsx`.
-- Verified in-browser: Home, Analytics, and Tests render cleanly with no error overlay.
+- Found the biggest credibility problem: every subject metric rendered the SAME value
+  (~12%). Root cause in `lib/store.ts` `seedProgress()` — the completed/partial calc keyed
+  only off `video.number` and `chapter.number`, never the subject, so all six subjects
+  computed identical completion. This polluted the Home Subject Progress rings, Analytics
+  Subject Completion radial, and Subject Mastery bars.
+- Rewrote `seedProgress()` with a per-subject `SUBJECT_TARGET` map (Physics 71% → English
+  25%), completing earlier chapters/videos first and leaving a small in-progress frontier.
+  Now the dashboard tells a believable learning story with distinct, descending values.
+- Verified in-browser (after clearing persisted localStorage): rings show 72/55/48,
+  radial shows nested arcs (72/55/48/40/33%), mastery bars graduate cleanly, and Total
+  Study Hours reads a realistic 111h.
 
-**Ended:** App loads and runs without errors. Home dashboard, Analytics charts, and Tests
-center all confirmed working. Syllabus & Doubts pages remain reachable via Cmd+K spotlight
-(consistent with the 10-item top nav in the spec).
+**Ended:** Subject analytics are coherent and product-grade across every surface.
 
-**Next candidates:** Full click-through of Library video player modal states (theater/PiP),
-Live page interactions, and Tests attempt/auto-save flow.
+---
+
+## Session 5 — 2026-06-16
+
+**Began:** App running cleanly. Reviewed the live app in-browser to find a meaningful
+improvement.
+
+**Done:**
+- Found a data-integrity bug: `leaderboard` in `lib/mock-data.ts` assigned ranks by array
+  index but generated scores with random noise, so standings weren't monotonic (e.g. rank
+  #3 outscored rank #2). This surfaced on the Home Leaderboard Peek, Batch Rank widget, and
+  the full Leaderboard page.
+- Fixed at the source: sort the 1000 entries by score descending and reassign ranks before
+  injecting "you" at slot 47. Now higher rank always means higher score everywhere.
+- Fixed two follow-on display bugs exposed by real (sometimes negative) `change` values:
+  - Home `WidgetLeaderPeek` always showed a green up-arrow; now renders a red down-arrow for
+    negative weekly change (imported `ArrowDownRight`).
+  - Leaderboard page "You" bar hardcoded `+{change}` in green; now direction-aware.
+- Verified in-browser: Home widgets and Leaderboard page show strictly descending scores and
+  correct trend direction/colors.
+
+**Ended:** Leaderboard data and trend indicators are consistent across all surfaces.
+
+**Next candidates:** Library video player modal states (theater/PiP), Live page
+interactions, Tests attempt/auto-save flow.
 
 ---
 
