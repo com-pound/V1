@@ -106,18 +106,18 @@ function seedProgress(): Record<string, VideoProgress> {
 }
 
 const DEFAULT_WIDGETS: WidgetState[] = [
-  { id: 'w-greeting', type: 'greeting', x: 24, y: 24, w: 880, h: 96, z: 1 },
-  { id: 'w-streak', type: 'streak', x: 24, y: 140, w: 220, h: 220, z: 1 },
-  { id: 'w-countdown-class', type: 'nextClass', x: 264, y: 140, w: 280, h: 220, z: 1 },
-  { id: 'w-goal', type: 'dailyGoal', x: 564, y: 140, w: 220, h: 220, z: 1 },
-  { id: 'w-rings', type: 'subjectRings', x: 804, y: 140, w: 360, h: 220, z: 1 },
-  { id: 'w-tests', type: 'testDue', x: 24, y: 380, w: 280, h: 240, z: 1 },
-  { id: 'w-notes', type: 'quickNotes', x: 324, y: 380, w: 280, h: 240, z: 1 },
-  { id: 'w-leader', type: 'leaderPeek', x: 624, y: 380, w: 260, h: 240, z: 1 },
-  { id: 'w-activity', type: 'recentActivity', x: 904, y: 380, w: 260, h: 240, z: 1 },
-  { id: 'w-rank', type: 'batchRank', x: 1184, y: 140, w: 240, h: 220, z: 1 },
-  { id: 'w-live', type: 'liveStatus', x: 904, y: 24, w: 260, h: 96, z: 1 },
-  { id: 'w-custom', type: 'customCountdown', x: 1184, y: 380, w: 240, h: 240, z: 1 },
+  { id: 'w-greeting', type: 'greeting', x: 24, y: 24, w: 1124, h: 96, z: 1 },
+  { id: 'w-live', type: 'liveStatus', x: 1164, y: 24, w: 260, h: 96, z: 1 },
+  { id: 'w-streak', type: 'streak', x: 24, y: 140, w: 220, h: 224, z: 1 },
+  { id: 'w-countdown-class', type: 'nextClass', x: 264, y: 140, w: 280, h: 224, z: 1 },
+  { id: 'w-goal', type: 'dailyGoal', x: 564, y: 140, w: 220, h: 224, z: 1 },
+  { id: 'w-rings', type: 'subjectRings', x: 804, y: 140, w: 360, h: 224, z: 1 },
+  { id: 'w-rank', type: 'batchRank', x: 1184, y: 140, w: 240, h: 224, z: 1 },
+  { id: 'w-tests', type: 'testDue', x: 24, y: 384, w: 280, h: 264, z: 1 },
+  { id: 'w-notes', type: 'quickNotes', x: 324, y: 384, w: 280, h: 264, z: 1 },
+  { id: 'w-leader', type: 'leaderPeek', x: 624, y: 384, w: 260, h: 264, z: 1 },
+  { id: 'w-activity', type: 'recentActivity', x: 904, y: 384, w: 260, h: 264, z: 1 },
+  { id: 'w-custom', type: 'customCountdown', x: 1184, y: 384, w: 240, h: 264, z: 1 },
 ]
 
 interface DeltaState {
